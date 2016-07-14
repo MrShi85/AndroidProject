@@ -13,12 +13,13 @@ public class CrimeListActivity extends SingleFragmentActivity {
 
     @Override
     protected Fragment createFragment() {
-        return new CrimeListFragment();
+        return CrimeListFragment.
+                newInstance(getIntent().getBooleanExtra(CrimeListFragment.SAVED_SUBTITLE,false));
     }
 
-    /*public static Intent newIntent(Context packageContext, int crimeListPos){
+    public static Intent newIntent(Context packageContext, boolean showSubtitle){
         Intent i = new Intent(packageContext, CrimeListActivity.class);
-        i.putExtra(CRIME_LIST_POSITION, crimeListPos);
+        i.putExtra(CrimeListFragment.SAVED_SUBTITLE, showSubtitle);
         return i;
-    }*/
+    }
 }

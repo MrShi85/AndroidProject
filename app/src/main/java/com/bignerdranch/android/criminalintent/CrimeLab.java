@@ -69,11 +69,12 @@ public class CrimeLab {
             if(cursor.getCount()==0){
                 return null;
             }
+            cursor.moveToFirst();
+            return cursor.getCrime();
         }
         finally {
             cursor.close();
         }
-        return null;
     }
 
     public void updateCrime(Crime crime){

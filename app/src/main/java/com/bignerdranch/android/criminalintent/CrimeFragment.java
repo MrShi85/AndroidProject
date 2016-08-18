@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -123,6 +124,7 @@ public class CrimeFragment extends Fragment {
 
         mReportButton = (Button)v.findViewById(R.id.crime_report);
         mReportButton.setOnClickListener(new View.OnClickListener(){
+            @Override
             public void onClick(View v){
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("text/plain");
@@ -171,12 +173,13 @@ public class CrimeFragment extends Fragment {
         }
 
         mPhotoButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
+            @Override
+            public void onClick(View v) {
                 startActivityForResult(captureImage, REQUEST_PHOTO);
             }
-
         });
 
+        updatePhotoView();
 
         return v;
     }
@@ -255,5 +258,14 @@ public class CrimeFragment extends Fragment {
 
         CrimeLab.get(getActivity())
                 .updateCrime(mCrime);
+    }
+    private void updatePhotoView(){
+        if(mPhotoFile == null || !mPhotoFile.exists()){
+            mPhotoView.setImageDrawable(null);
+        } else {
+            Bitmap bitmap = PictureUtils.getScaleBitmap(
+                    mPhotoFile.getPath(), getActivity());
+            mPhotoView.setImageBitmap(bitmap);
+        }
     }
 }
